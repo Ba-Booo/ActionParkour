@@ -18,8 +18,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashTime;
 
-    //대쉬공
+    //소울
+    private bool usingSoul = false;
     [SerializeField] private GameObject soulPrefab;
+    [SerializeField] private ParticleSystem collectParticle;
 
     //마우스
     private Vector2 mouseDistance;
@@ -31,6 +33,11 @@ public class PlayerControl : MonoBehaviour
     //에니메이션
     private bool flip = false;
     private SpriteRenderer playerRenderer;
+
+    //충격파
+    [SerializeField] private float shockWaveTime;
+    [SerializeField] private Renderer shockWave;
+
 
     #region 센터
 
@@ -56,9 +63,15 @@ public class PlayerControl : MonoBehaviour
             StartCoroutine( Dash() );
         }
 
-        if( Input.GetKeyDown( KeyCode.R) )
+        if( Input.GetKeyDown( KeyCode.E ) && !usingSoul)
         {
-            Soul();
+            SoulSummon();
+            StartCoroutine( ShockWaveSummon( -0.1f, 1f ) );
+        }
+        else if( Input.GetKeyDown( KeyCode.E ) && usingSoul)
+        {
+            SoulRecovery();
+            //StartCoroutine( ShockWaveRecovery( -0.1f, 1f ) );
         }
 
     }
@@ -109,16 +122,23 @@ public class PlayerControl : MonoBehaviour
 
     #region 영혼
 
-    void Soul()
+    void SoulSummon()
     {
         mouseDistance = mouseTransform.position - transform.position; 
         float angle = Mathf.Atan2( mouseDistance.y, mouseDistance.x ) * Mathf.Rad2Deg;
         GameObject soul = Instantiate( soulPrefab, transform.position, Quaternion.Euler( 0, 0, angle - 90 ) );
+        usingSoul = true;
+    }
+
+    void SoulRecovery()
+    {
+        collectParticle.Play();
+        usingSoul = false;
     }
 
     #endregion
 
-    #region 에니메이션
+    #region 에니메이션 및 임팩트
 
     void Animation()
     {
@@ -136,6 +156,36 @@ public class PlayerControl : MonoBehaviour
         playerRenderer.flipX = flip;
 
     }
+
+    IEnumerator ShockWaveSummon( float startPosition, float endPosition )     //보류
+    {
+
+        shockWave.material.SetFloat( "_waveDistance", startPosition );
+
+        float elapsedTime = 0;
+        while ( elapsedTime <= shockWaveTime)
+        {
+            elapsedTime += Time.deltaTime * 2;
+            shockWave.material.SetFloat( "_waveDistance", elapsedTime );
+            yield return null;
+        }
+
+    }
+
+    // IEnumerator ShockWaveRecovery( float startPosition, float endPosition )     //보류
+    // {
+
+    //     shockWave.material.SetFloat( "_waveDistance", startPosition );
+
+    //     float elapsedTime = shockWaveTime;
+    //     while ( elapsedTime <= shockWaveTime)
+    //     {
+    //         elapsedTime -= Time.deltaTime * 2;
+    //         shockWave.material.SetFloat( "_waveDistance", elapsedTime );
+    //         yield return null;
+    //     }
+
+    // }
 
     #endregion
 
