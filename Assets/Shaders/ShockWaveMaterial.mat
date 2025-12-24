@@ -49,7 +49,7 @@ Material:
     - _Size: 0.05
     - _WaveDistance: 0.5
     - _XSizeRatio: 1.777
-    - _shockWaveStrength: -0.1
+    - _shockWaveStrength: -0.13
     - _size: 0.05
     - _waveDistance: 1
     m_Colors:

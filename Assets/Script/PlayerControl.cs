@@ -17,11 +17,13 @@ public class PlayerControl : MonoBehaviour
     public bool isDashing = false;
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashTime;
+    [SerializeField] private ParticleSystem dashnParticle;
 
     //소울
     private bool usingSoul = false;
     [SerializeField] private GameObject soulPrefab;
-    [SerializeField] private ParticleSystem collectParticle;
+    [SerializeField] private ParticleSystem soulSummonParticle;
+    [SerializeField] private ParticleSystem soulCollectParticle;
 
     //마우스
     private Vector2 mouseDistance;
@@ -71,7 +73,7 @@ public class PlayerControl : MonoBehaviour
         else if( Input.GetKeyDown( KeyCode.E ) && usingSoul)
         {
             SoulRecovery();
-            //StartCoroutine( ShockWaveRecovery( -0.1f, 1f ) );
+            StartCoroutine( ShockWaveRecovery( -0.1f, 1f ) );
         }
 
     }
@@ -104,6 +106,8 @@ public class PlayerControl : MonoBehaviour
     IEnumerator Dash()
     {
 
+        dashnParticle.Play();
+
         isDashing = true;
 
         mouseDistance = mouseTransform.position - transform.position;  
@@ -124,6 +128,7 @@ public class PlayerControl : MonoBehaviour
 
     void SoulSummon()
     {
+        soulSummonParticle.Play();
         mouseDistance = mouseTransform.position - transform.position; 
         float angle = Mathf.Atan2( mouseDistance.y, mouseDistance.x ) * Mathf.Rad2Deg;
         GameObject soul = Instantiate( soulPrefab, transform.position, Quaternion.Euler( 0, 0, angle - 90 ) );
@@ -132,7 +137,7 @@ public class PlayerControl : MonoBehaviour
 
     void SoulRecovery()
     {
-        collectParticle.Play();
+        soulCollectParticle.Play();
         usingSoul = false;
     }
 
@@ -157,7 +162,7 @@ public class PlayerControl : MonoBehaviour
 
     }
 
-    IEnumerator ShockWaveSummon( float startPosition, float endPosition )     //보류
+    IEnumerator ShockWaveSummon( float startPosition, float endPosition )
     {
 
         shockWave.material.SetFloat( "_waveDistance", startPosition );
@@ -166,26 +171,28 @@ public class PlayerControl : MonoBehaviour
         while ( elapsedTime <= shockWaveTime)
         {
             elapsedTime += Time.deltaTime * 2;
+            float lerpedAmount = Mathf.Lerp( startPosition, endPosition, elapsedTime / shockWaveTime );
             shockWave.material.SetFloat( "_waveDistance", elapsedTime );
             yield return null;
         }
 
     }
 
-    // IEnumerator ShockWaveRecovery( float startPosition, float endPosition )     //보류
-    // {
+    IEnumerator ShockWaveRecovery( float startPosition, float endPosition )
+    {
 
-    //     shockWave.material.SetFloat( "_waveDistance", startPosition );
+        shockWave.material.SetFloat( "_waveDistance", endPosition );
 
-    //     float elapsedTime = shockWaveTime;
-    //     while ( elapsedTime <= shockWaveTime)
-    //     {
-    //         elapsedTime -= Time.deltaTime * 2;
-    //         shockWave.material.SetFloat( "_waveDistance", elapsedTime );
-    //         yield return null;
-    //     }
+        float elapsedTime = shockWaveTime;
+        while ( elapsedTime >= startPosition )
+        {
+            elapsedTime -= Time.deltaTime;
+            float lerpedAmount = Mathf.Lerp( endPosition, startPosition, elapsedTime / shockWaveTime );
+            shockWave.material.SetFloat( "_waveDistance", elapsedTime );
+            yield return null;
+        }
 
-    // }
+    }
 
     #endregion
 
@@ -224,6 +231,7 @@ public class PlayerControl : MonoBehaviour
         }
         
     }
+    
 
     #endregion
 
