@@ -5,26 +5,44 @@ using UnityEngine;
 public class SoulMove : MonoBehaviour
 {
 
-    // private bool collected;
     private Rigidbody2D rb;
+    private ParticleSystem soulParticle;
     [SerializeField] private float soulSpeed;
-    // [SerializeField] private GameObject target;
+    [SerializeField] private Transform target;
+    [SerializeField] private PlayerControl playerControl;
 
     void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
-
-        rb.AddRelativeForce( Vector3.up * soulSpeed, ForceMode2D.Impulse );
-
+        soulParticle = GetComponent<ParticleSystem>();
     }
 
     void Update()
     {
-        if( Input.GetKeyDown( KeyCode.E ) )     //보류
+
+        transform.rotation = Quaternion.Euler( 0, 0, playerControl.angle - 90 );
+
+        if( Input.GetKeyDown( KeyCode.E ) && !playerControl.usingSoul )
         {
-            Destroy( this.gameObject );
+            soulParticle.Play();
+            rb.AddRelativeForce( Vector3.up * soulSpeed, ForceMode2D.Impulse );
         }
+        else if( !playerControl.usingSoul )
+        {
+            transform.position = Vector2.Lerp( transform.position, target.position, 5f * Time.deltaTime );
+        }
+
+    }
+
+    void OnTriggerStay2D( Collider2D collider )
+    {
+
+        //점프관련
+        if( collider.gameObject.tag == "Player" && !playerControl.usingSoul )
+        {
+            soulParticle.Stop();
+        }
+        
     }
 
 }

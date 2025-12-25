@@ -14649,7 +14649,7 @@ GameObject:
   - component: {fileID: 7398408666218797442}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14807,6 +14807,8 @@ MonoBehaviour:
   dashDistance: 80
   dashTime: 0.1
   dashnParticle: {fileID: 8723676350371728459}
+  usingSoul: 0
+  angle: 0
   soulPrefab: {fileID: 1190537312432022100, guid: d2333a5070bcb413a939224a34ed27d8, type: 3}
   soulSummonParticle: {fileID: 1222611354662446202}
   soulCollectParticle: {fileID: 7723695364686087409}
