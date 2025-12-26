@@ -20,7 +20,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private ParticleSystem dashnParticle;
 
     //소울
-    private bool usingSoul = false;
+    public bool usingSoul = false;
+    public float angle;
     [SerializeField] private GameObject soulPrefab;
     [SerializeField] private ParticleSystem soulSummonParticle;
     [SerializeField] private ParticleSystem soulCollectParticle;
@@ -39,6 +40,7 @@ public class PlayerControl : MonoBehaviour
     //충격파
     [SerializeField] private float shockWaveTime;
     [SerializeField] private Renderer shockWave;
+    
 
 
     #region 센터
@@ -51,26 +53,33 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-
-        if( isDashing )
-        {
-            return;
-        }
       
+        // 움직임
         Move();
         Animation();
 
+        // 방향 계산
+        mouseDistance = mouseTransform.position - transform.position; 
+        angle = Mathf.Atan2( mouseDistance.y, mouseDistance.x ) * Mathf.Rad2Deg;
+
+        // 대쉬 횟수 음수 방지
+        if( dashCount < 0 )
+        {
+            dashCount = 0;
+        }
+
+        //스킬
         if( Input.GetKeyDown( KeyCode.LeftShift) && dashCount >= 1 )
         {
             StartCoroutine( Dash() );
         }
 
-        if( Input.GetKeyDown( KeyCode.E ) && !usingSoul)
+        if( Input.GetKeyDown( KeyCode.E ) && !usingSoul )
         {
             SoulSummon();
             StartCoroutine( ShockWaveSummon( -0.1f, 1f ) );
         }
-        else if( Input.GetKeyDown( KeyCode.E ) && usingSoul)
+        else if( Input.GetKeyDown( KeyCode.E ) && usingSoul )
         {
             SoulRecovery();
             StartCoroutine( ShockWaveRecovery( -0.1f, 1f ) );
@@ -128,17 +137,14 @@ public class PlayerControl : MonoBehaviour
 
     void SoulSummon()
     {
-        soulSummonParticle.Play();
-        mouseDistance = mouseTransform.position - transform.position; 
-        float angle = Mathf.Atan2( mouseDistance.y, mouseDistance.x ) * Mathf.Rad2Deg;
-        GameObject soul = Instantiate( soulPrefab, transform.position, Quaternion.Euler( 0, 0, angle - 90 ) );
         usingSoul = true;
+        soulSummonParticle.Play();
     }
 
     void SoulRecovery()
     {
-        soulCollectParticle.Play();
         usingSoul = false;
+        soulCollectParticle.Play();
     }
 
     #endregion
@@ -198,13 +204,23 @@ public class PlayerControl : MonoBehaviour
 
     #region 충돌 관련
 
-    void OnCollisionStay2D( Collision2D collision )
+    void OnCollisionEnter2D( Collision2D collision )
     {
 
         //점프관련
         if( collision.gameObject.tag == "Ground" )
         {
             nowJumpCount = maxJumpCount;
+        }
+        
+    }
+
+    void OnCollisionStay2D( Collision2D collision )
+    {
+
+        //점프관련
+        if( collision.gameObject.tag == "Ground" )
+        {
             dashCount = 1;
         }
         
@@ -214,24 +230,23 @@ public class PlayerControl : MonoBehaviour
     {
 
         //점프관련
-        if( collider.gameObject.tag == "Soul" )
+        if( collider.gameObject.tag == "Soul" && usingSoul )
         {
-            dashCount = 1;
+            dashCount += 1;
         }
         
     }
 
-    void OnTriggerStay2D( Collider2D collider )
+    void OnTriggerExit2D( Collider2D collider )
     {
 
         //점프관련
-        if( collider.gameObject.tag == "Soul" )
+        if( collider.gameObject.tag == "Soul" && usingSoul )
         {
-            dashCount = 1;
+            dashCount -= 1;
         }
         
     }
-    
 
     #endregion
 
