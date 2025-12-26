@@ -43,15 +43,18 @@ Material:
     m_Floats:
     - _CausticOffsetSpeed: 0.8
     - _CausticPower: 10
-    - _CausticScale: 0.5
+    - _CausticScale: 30
     - _CausticStrength: 1.5
-    - _LineLength: 24.5
+    - _LineLength: 0.995
+    - _SineAmp: 0.2
+    - _SineLength: 0.08
+    - _SineSpeed: 0.5
     m_Colors:
     - _BodyColor: {r: 0.11320752, g: 0.016337225, b: 0, a: 1}
     - _CausticColor: {r: 1, g: 0.3144288, b: 0, a: 0}
     - _CausticScrollDir: {r: 0.045, g: 0, b: 0, a: 0}
     - _CausticTiling: {r: 0.5, g: 1, b: 0, a: 0}
-    - _LineColor: {r: 0.74509805, g: 0.3760083, b: 0, a: 0}
+    - _LineColor: {r: 1, g: 0.5203068, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &6905547600093108415
 MonoBehaviour:

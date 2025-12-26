@@ -69,7 +69,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         //스킬
-        if( Input.GetKeyDown( KeyCode.LeftShift) && dashCount >= 1 )
+        if( ( Input.GetKeyDown( KeyCode.LeftShift ) || Input.GetMouseButtonDown(0) ) && dashCount >= 1 )
         {
             StartCoroutine( Dash() );
         }
@@ -100,7 +100,7 @@ public class PlayerControl : MonoBehaviour
         transform.position = new Vector2( transform.position.x + moveX, transform.position.y );
 
         //점프
-        if( Input.GetKeyDown( KeyCode.W ) && nowJumpCount > 0 )
+        if( ( Input.GetKeyDown( KeyCode.W ) || Input.GetKeyDown( KeyCode.UpArrow ) || Input.GetKeyDown( KeyCode.Space ) )&& nowJumpCount > 0 )
         {
             rb.AddForce( Vector2.up * jumpPower, ForceMode2D.Impulse );
             nowJumpCount -= 1;
