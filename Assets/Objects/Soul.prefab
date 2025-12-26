@@ -4867,7 +4867,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 3
 --- !u!50 &6865984125523242260
 Rigidbody2D:
   serializedVersion: 4
@@ -4908,3 +4908,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soulSpeed: 50
+  target: {fileID: 0}
+  playerControl: {fileID: 0}
