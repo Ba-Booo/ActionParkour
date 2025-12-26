@@ -1,49 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
 
+    // 체력
+    public int nowHP;
+    [SerializeField] private int maxHP;
+    [SerializeField] private ParticleSystem deathParticle;
+
+    // 움직임
     [SerializeField] private float playerSpeed;
 
-    //점프
+    // 점프
     private int nowJumpCount;
     [SerializeField] private int maxJumpCount;
     [SerializeField] private float jumpPower;
 
-    //대쉬
+    // 대쉬
     [SerializeField] private int dashCount = 1;
     public bool isDashing = false;
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashTime;
     [SerializeField] private ParticleSystem dashnParticle;
 
-    //소울
+    // 소울
     public bool usingSoul = false;
     public float angle;
-    [SerializeField] private GameObject soulPrefab;
     [SerializeField] private ParticleSystem soulSummonParticle;
     [SerializeField] private ParticleSystem soulCollectParticle;
 
-    //마우스
+    // 마우스
     private Vector2 mouseDistance;
     [SerializeField] private Transform mouseTransform;
 
-    //물리
+    // 물리
     private Rigidbody2D rb;
 
-    //에니메이션
+    // 에니메이션
     private bool flip = false;
     private SpriteRenderer playerRenderer;
 
-    //충격파
+    // 충격파
     [SerializeField] private float shockWaveTime;
     [SerializeField] private Renderer shockWave;
     
 
 
     #region 센터
+    void Awake()
+    {
+        nowHP = maxHP;
+    }
 
     void Start()
     {
@@ -53,6 +63,14 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+
+        // 쥬금
+        if( nowHP <= 0 )
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+            deathParticle.Play();
+            return;
+        }
       
         // 움직임
         Move();
@@ -68,18 +86,18 @@ public class PlayerControl : MonoBehaviour
             dashCount = 0;
         }
 
-        //스킬
+        // 스킬
         if( ( Input.GetKeyDown( KeyCode.LeftShift ) || Input.GetMouseButtonDown(0) ) && dashCount >= 1 )
         {
             StartCoroutine( Dash() );
         }
 
-        if( Input.GetKeyDown( KeyCode.E ) && !usingSoul )
+        if( ( Input.GetKeyDown( KeyCode.E ) || Input.GetMouseButtonDown(1) ) && !usingSoul )
         {
             SoulSummon();
             StartCoroutine( ShockWaveSummon( -0.1f, 1f ) );
         }
-        else if( Input.GetKeyDown( KeyCode.E ) && usingSoul )
+        else if( ( Input.GetKeyDown( KeyCode.E ) || Input.GetMouseButtonDown(1) ) && usingSoul )
         {
             SoulRecovery();
             StartCoroutine( ShockWaveRecovery( -0.1f, 1f ) );
@@ -94,12 +112,12 @@ public class PlayerControl : MonoBehaviour
     void Move()
     {
 
-        //이동
+        // 이동
         float moveX = Input.GetAxis("Horizontal") * playerSpeed * Time.deltaTime;
 
         transform.position = new Vector2( transform.position.x + moveX, transform.position.y );
 
-        //점프
+        // 점프
         if( ( Input.GetKeyDown( KeyCode.W ) || Input.GetKeyDown( KeyCode.UpArrow ) || Input.GetKeyDown( KeyCode.Space ) )&& nowJumpCount > 0 )
         {
             rb.AddForce( Vector2.up * jumpPower, ForceMode2D.Impulse );
@@ -202,12 +220,14 @@ public class PlayerControl : MonoBehaviour
 
     #endregion
 
+
+
     #region 충돌 관련
 
     void OnCollisionEnter2D( Collision2D collision )
     {
 
-        //점프관련
+        // 점프관련
         if( collision.gameObject.tag == "Ground" )
         {
             nowJumpCount = maxJumpCount;
@@ -218,7 +238,7 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionStay2D( Collision2D collision )
     {
 
-        //점프관련
+        // 대쉬관련
         if( collision.gameObject.tag == "Ground" )
         {
             dashCount = 1;
@@ -229,10 +249,15 @@ public class PlayerControl : MonoBehaviour
     void OnTriggerEnter2D( Collider2D collider )
     {
 
-        //점프관련
+        // 대쉬관련
         if( collider.gameObject.tag == "Soul" && usingSoul )
         {
             dashCount += 1;
+        }
+
+        if( collider.gameObject.tag == "Obstacle" )
+        {
+            nowHP -= 1;
         }
         
     }
@@ -240,7 +265,7 @@ public class PlayerControl : MonoBehaviour
     void OnTriggerExit2D( Collider2D collider )
     {
 
-        //점프관련
+        // 대쉬관련
         if( collider.gameObject.tag == "Soul" && usingSoul )
         {
             dashCount -= 1;

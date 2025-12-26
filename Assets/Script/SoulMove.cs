@@ -17,12 +17,12 @@ public class SoulMove : MonoBehaviour
         soulParticle = GetComponent<ParticleSystem>();
     }
 
-    void Update()
+    void LateUpdate()
     {
 
         transform.rotation = Quaternion.Euler( 0, 0, playerControl.angle - 90 );
 
-        if( Input.GetKeyDown( KeyCode.E ) && !playerControl.usingSoul )
+        if( ( Input.GetKeyDown( KeyCode.E ) || Input.GetMouseButtonDown(1) ) && playerControl.usingSoul )
         {
             soulParticle.Play();
             rb.AddRelativeForce( Vector3.up * soulSpeed, ForceMode2D.Impulse );
