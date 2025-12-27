@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Soul
   - Obstacle
+  - SceneTransition
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class PlayerControl : MonoBehaviour
 {
 
+    // 화면전환
+    [SerializeField] private Fade fade;
+    
     // 체력
     public int nowHP;
     [SerializeField] private int maxHP;
@@ -69,6 +72,7 @@ public class PlayerControl : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints2D.FreezePosition;
             deathParticle.Play();
+            StartCoroutine( fade.Death() );
             return;
         }
       
@@ -258,6 +262,11 @@ public class PlayerControl : MonoBehaviour
         if( collider.gameObject.tag == "Obstacle" )
         {
             nowHP -= 1;
+        }
+
+        if( collider.gameObject.tag == "SceneTransition" )
+        {
+            StartCoroutine( fade.SceneTransitionFadeOut() );
         }
         
     }

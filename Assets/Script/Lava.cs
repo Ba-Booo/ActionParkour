@@ -15,7 +15,7 @@ public class Lava : MonoBehaviour
 
         if( transform.position.y < target.position.y - distance )
         {
-            transform.position = new Vector3( transform.position.x, Mathf.Lerp(transform.position.y, target.position.y - distance, 2f * Time.deltaTime ), transform.position.z );
+            transform.position = new Vector3( transform.position.x, Mathf.Lerp(transform.position.y, target.position.y - distance, 1f * Time.deltaTime ), transform.position.z );
         }
 
     }

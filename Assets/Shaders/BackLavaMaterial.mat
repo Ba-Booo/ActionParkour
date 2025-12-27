@@ -59,11 +59,11 @@ Material:
     - _CausticScale: 30
     - _CausticStrength: 2
     - _LineLength: 0.999
-    - _SineAmp: 0.1
-    - _SineLength: 0.07
+    - _SineAmp: 0.13
+    - _SineLength: 0.065
     - _SineSpeed: 0.5
     m_Colors:
-    - _BodyColor: {r: 0.3018868, g: 0.03937654, b: 0, a: 0}
+    - _BodyColor: {r: 0.26415092, g: 0.034305315, b: 0, a: 0}
     - _CausticColor: {r: 1, g: 0.3137255, b: 0, a: 0}
     - _CausticScrollDir: {r: 0.045, g: 0, b: 0, a: 0}
     - _CausticTiling: {r: 0.5, g: 1.5, b: 0, a: 0}
