@@ -5065,7 +5065,7 @@ GameObject:
   - component: {fileID: 423472140}
   - component: {fileID: 423472142}
   - component: {fileID: 423472141}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PracticeGround (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -5285,7 +5285,7 @@ GameObject:
   - component: {fileID: 473837780}
   - component: {fileID: 473837782}
   - component: {fileID: 473837781}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ceiling
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -5415,7 +5415,7 @@ GameObject:
   - component: {fileID: 516428556}
   - component: {fileID: 516428555}
   - component: {fileID: 516428554}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RightWall
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -5815,7 +5815,7 @@ GameObject:
   - component: {fileID: 744967132}
   - component: {fileID: 744967131}
   - component: {fileID: 744967130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -6012,7 +6012,7 @@ GameObject:
   m_Component:
   - component: {fileID: 921785060}
   - component: {fileID: 921785061}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Destination
   m_TagString: SceneTransition
   m_Icon: {fileID: 0}
@@ -11171,7 +11171,7 @@ GameObject:
   - component: {fileID: 1330737083}
   - component: {fileID: 1330737085}
   - component: {fileID: 1330737084}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PracticeGround (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -16204,7 +16204,7 @@ GameObject:
   - component: {fileID: 1721591255}
   - component: {fileID: 1721591257}
   - component: {fileID: 1721591256}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PracticeGround (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -16334,7 +16334,7 @@ GameObject:
   - component: {fileID: 1754764351}
   - component: {fileID: 1754764353}
   - component: {fileID: 1754764352}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LeftWall
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -16462,7 +16462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1788148629}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}

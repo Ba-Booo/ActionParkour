@@ -270,6 +270,12 @@ public class PlayerControl : MonoBehaviour
         {
             dashCount += 1;
         }
+        
+        // 대쉬관련
+        if( collider.gameObject.tag == "ExtraSoul" )
+        {
+            dashCount += 1;
+        }
 
         if( collider.gameObject.tag == "Obstacle" )
         {
@@ -288,6 +294,10 @@ public class PlayerControl : MonoBehaviour
 
         // 대쉬관련
         if( collider.gameObject.tag == "Soul" && usingSoul )
+        {
+            dashCount -= 1;
+        }
+        if( collider.gameObject.tag == "ExtraSoul" )
         {
             dashCount -= 1;
         }
