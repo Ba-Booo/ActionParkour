@@ -16686,7 +16686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7398408666218797442, guid: 076a23c3d5cc34159ae47b38315a65a7, type: 3}
       propertyPath: dashDistance
-      value: 100
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7398408666218797442, guid: 076a23c3d5cc34159ae47b38315a65a7, type: 3}
       propertyPath: shockWaveTime
