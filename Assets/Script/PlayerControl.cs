@@ -141,8 +141,20 @@ public class PlayerControl : MonoBehaviour
 
         isDashing = true;
 
-        mouseDistance = mouseTransform.position - transform.position;  
-        rb.velocity = mouseDistance.normalized * dashDistance;
+        mouseDistance = mouseTransform.position - transform.position; 
+        
+        int layerMask = 1 << LayerMask.NameToLayer("Ground");                 //땅 관련
+        RaycastHit2D hit = Physics2D.Raycast( transform.position, mouseDistance.normalized, dashDistance, layerMask);
+        Debug.DrawRay(transform.position, mouseDistance.normalized  * dashDistance * 10, Color.red);
+
+        if( hit )
+        {
+            rb.velocity = mouseDistance.normalized * Vector2.Distance( transform.position, hit.point ) * dashDistance;
+        }
+        else
+        {
+            rb.velocity = mouseDistance.normalized * dashDistance * 10f;
+        }
         
         yield return  new WaitForSeconds( dashTime );
 

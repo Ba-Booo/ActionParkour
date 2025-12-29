@@ -19686,7 +19686,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c24499e44086345928fc6b9a5fa31eae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f06677d3e1b7846d7a4f05f100bef225, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -19780,7 +19780,7 @@ MonoBehaviour:
   jumpPower: 15
   dashCount: 1
   isDashing: 0
-  dashDistance: 80
+  dashDistance: 13
   dashTime: 0.1
   dashnParticle: {fileID: 8723676350371728459}
   usingSoul: 0

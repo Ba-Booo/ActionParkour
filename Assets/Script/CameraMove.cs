@@ -42,7 +42,7 @@ public class CameraMove : MonoBehaviour
         }
         else
         {
-            transform.position = transform.position = new Vector2( transform.position.x, Mathf.Lerp(transform.position.y, target.transform.position.y, 20f * Time.deltaTime) );
+            transform.position = transform.position = new Vector2( transform.position.x, Mathf.Lerp(transform.position.y, target.transform.position.y + 1.5f, 20f * Time.deltaTime) );
         }
         
 

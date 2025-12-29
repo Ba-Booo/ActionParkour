@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ObstacleMaterial
+  m_Name: FlipObstacleMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 2a1e56a35b8e1475b9450c7c7d2846e7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -53,7 +53,7 @@ Material:
     - _BodyColor: {r: 0.37647057, g: 0.054901943, b: 0, a: 0}
     - _CausticColor: {r: 1, g: 0.3137255, b: 0, a: 0}
     - _CausticScrollDir: {r: 0.045, g: 0, b: 0, a: 0}
-    - _CausticTiling: {r: 0.25, g: 0.75, b: 0, a: 0}
+    - _CausticTiling: {r: -0.25, g: 0.75, b: 0, a: 0}
     - _LineColor: {r: 1, g: 0.8874891, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &218700879764705235
