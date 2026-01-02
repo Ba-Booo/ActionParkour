@@ -5,18 +5,23 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
 
+    bool ap = true;
+
     [SerializeField] private GameObject target;
 
     //카메라 이동 범위
     public Vector2 xRange;
     public Vector2 yRange;
 
+    AudioSource audioSource;
+    public AudioClip clip;
+
     //대쉬관련
     [SerializeField] private PlayerControl playerControl;
 
     void Start()
     {
-
+        audioSource = gameObject.AddComponent<AudioSource>(); 
     }
 
     void LateUpdate()
@@ -51,6 +56,16 @@ public class CameraMove : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, yClamp, -10f);
 
+    }
+
+    void Update()
+    {
+        if(ap)
+        {
+            audioSource.PlayOneShot(clip);
+            ap = false;
+        }
+        
     }
 
 }

@@ -289,6 +289,25 @@ public class PlayerControl : MonoBehaviour
         
     }
 
+    void OnTriggerStay2D( Collider2D collider )
+    {
+
+        // 대쉬관련
+        if( collider.gameObject.tag == "Soul" && usingSoul && dashCount == 0 )
+        {
+            dashCount = 1;
+        }
+        
+        // 대쉬관련
+        if( collider.gameObject.tag == "ExtraSoul" && dashCount == 0 )
+        {
+            dashCount = 1;
+        }
+        
+    }
+
+    
+
     void OnTriggerExit2D( Collider2D collider )
     {
 
